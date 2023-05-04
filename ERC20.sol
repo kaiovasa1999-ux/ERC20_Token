@@ -13,4 +13,15 @@ contract ERC20 is IERC20 {
     mapping(address => mapping(address => uint)) private _allowances;
 
 
+    function balanceOf(address account) public view virtual override returns (uint256) {
+        return _balances[account];
+    }
+
+    function transfer(address to, uint value) public payable override returns (bool){
+        require(_balances[to] >= value,"insuffisiont ammount");
+        _balances[to] += value;
+        totalSupply += value;
+
+        return true;
+    }
 }
