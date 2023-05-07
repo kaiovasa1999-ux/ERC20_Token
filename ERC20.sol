@@ -46,7 +46,7 @@ contract ERC20 is IERC20 {
 
     function tranferFrom(address from, address to,uint  amount) public returns (bool){
        require(_allowances[from][msg.sender] >= amount, "Insufficient amount");
-        _balances[to] += amount;
+       transfer(to,amount);
        return true;
     }
 
