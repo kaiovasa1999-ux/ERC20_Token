@@ -3,8 +3,9 @@
 pragma solidity ^0.8.0;
 
 interface IERC20{
-    event transfer(address indexed from, address indexed to, uint256 value);
-    
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed _spender ,uint256  _value);
+
     function name() external view returns (string memory);
     function symbol() external view returns (string memory);
     function totalSupply() external view returns (uint256);
