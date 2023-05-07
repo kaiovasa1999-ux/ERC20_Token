@@ -23,6 +23,14 @@ contract ERC20 is IERC20 {
         return _symbol;
     }
 
+    function totalSupply() public view returns (uint256){
+        return _totalSupply;
+    }
+
+    function decimals() public view returns (uint8){
+        return _decimals;
+    }
+
     function balanceOf(address _owner) public view virtual override returns (uint256) {
         return _balances[_owner];
     }
@@ -33,20 +41,17 @@ contract ERC20 is IERC20 {
         _balances[to] += value;
         emit transferEV(to,value);
 
-    
         return true;
     }
 
-    function totalSupply() public view returns (uint256){
-        return _totalSupply;
+    function tranferFrom(address from, address to,uint  amount) public returns (bool){
+       require(_allowances[from][msg.sender] >= amount, "Insufficient amount");
+        _balances[to] += amount;
+       return true;
     }
 
-    function decimals() public view returns (uint8){
-        return _decimals;
-    }
-
-    function tranferFrom(address from,address to, uint256 amount) external view returns(bool){
-
+    function approve(address _spender, uint256 _value) public returns (bool){
+        _allowances[msg.sender][_spender] += _value;
     }
 
 }
