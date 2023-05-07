@@ -10,7 +10,7 @@ contract ERC20 is IERC20 {
     uint256 private _totalSupply;
     uint8 private _decimals;
 
-    event transferEV(address indexed to, uint amount);
+    event transferEV(address indexed from, address indexed to, uint256 value);
 
 
     mapping(address => uint256) private _balances;
@@ -35,18 +35,19 @@ contract ERC20 is IERC20 {
         return _balances[_owner];
     }
 
-    function transfer(address to, uint value) public payable override returns (bool){
+    function transferTo(address to, uint value) public override returns (bool){
         require(_balances[msg.sender] >= value,"insuffisiont ammount");
         _balances[msg.sender] -= value;
         _balances[to] += value;
-        emit transferEV(to,value);
+        emit transferEV(msg.sender,to,value);
 
         return true;
     }
 
     function tranferFrom(address from, address to,uint  amount) public returns (bool){
        require(_allowances[from][msg.sender] >= amount, "Insufficient amount");
-       transfer(to,amount);
+       transferTo(to,amount);
+       emit transferEV(msg.sender,to, amount);
        return true;
     }
 
